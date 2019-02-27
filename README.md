@@ -1,4 +1,4 @@
-# NOTE: Currently only works with relations when updating a Model. 
+# NOTE: Currently only works with relations and only when updating a Model. 
 
 # Laravel Nova Checkboxes Field
 
