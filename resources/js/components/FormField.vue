@@ -3,21 +3,21 @@
         <template slot="field">
             <div class="w-full max-col-2">
                 <div
-                    v-for="(label, option) in field.options"
-                    :key="option"
-                    class="flex mb-2"
+                        v-for="(label, option) in field.options"
+                        :key="option"
+                        class="flex mb-2"
                 >
                     <checkbox
-                        :value="option"
-                        :checked="isChecked(option)"
-                        @input="toggleOption(option)"
-                        class="pr-2"
+                            :value="option"
+                            :checked="isChecked(option)"
+                            @input="toggleOption(option)"
+                            class="pr-2"
                     />
                     <label
-                        :for="field.name"
-                        v-text="label"
-                        @click="toggleOption(option)"
-                        class="w-full"
+                            :for="field.name"
+                            v-text="label"
+                            @click="toggleOption(option)"
+                            class="w-full"
                     ></label>
                 </div>
             </div>
@@ -29,67 +29,67 @@
 </template>
 
 <script>
-import { FormField, HandlesValidationErrors } from 'laravel-nova'
+    import { FormField, HandlesValidationErrors } from 'laravel-nova'
 
-export default {
-    mixins: [FormField, HandlesValidationErrors],
+    export default {
+        mixins: [FormField, HandlesValidationErrors],
 
-    props: ['resourceName', 'resourceId', 'field'],
+        props: ['resourceName', 'resourceId', 'field'],
 
-    methods: {
+        methods: {
 
-        getCheckedBoxesIds( values )
-        {
-            var ids = [];
-
-            for ( var i = 0; i < values.length; i++ )
+            getCheckedBoxesIds( values )
             {
-                ids.push(values[i].id);
+                var ids = [];
+
+                for ( var i = 0; i < values.length; i++ )
+                {
+                    ids.push(values[i].id);
+                }
+
+                return ids;
+            },
+
+            isChecked(option) {
+                option = parseInt(option);
+                return this.value ? this.value.includes(option) : false
+            },
+
+            toggleOption(option) {
+                option = parseInt(option);
+
+                if (this.isChecked(option)) {
+                    this.$set(this, 'value', this.value.filter(item => item != option))
+
+                    return
+                }
+
+                this.value.push(option)
+            },
+
+            /*
+             * Set the initial, internal value for the field.
+             */
+            setInitialValue() {
+                this.value = this.getCheckedBoxesIds( this.field.value );
+                // this.value = this.field.value || [];
+            },
+
+            /**
+             * Fill the given FormData object with the field's internal value.
+             */
+            fill(formData) {
+                formData.append(this.field.attribute, this.value || []);
+            },
+
+            /**
+             * Update the field's internal value.
+             */
+            handleChange(value) {
+                this.value = value
             }
-
-            return ids;
-        },
-
-        isChecked(option) {
-            option = parseInt(option);
-            return this.value ? this.value.includes(option) : false
-        },
-
-        toggleOption(option) {
-            option = parseInt(option);
-
-            if (this.isChecked(option)) {
-                this.$set(this, 'value', this.value.filter(item => item != option))
-
-                return
-            }
-
-            this.value.push(option)
-        },
-
-        /*
-         * Set the initial, internal value for the field.
-         */
-        setInitialValue() {
-            this.value = this.getCheckedBoxesIds( this.field.value );
-            // this.value = this.field.value || [];
-        },
-
-        /**
-         * Fill the given FormData object with the field's internal value.
-         */
-        fill(formData) {
-            formData.append(this.field.attribute, this.value || []);
-        },
-
-        /**
-         * Update the field's internal value.
-         */
-        handleChange(value) {
-          this.value = value
         }
     }
-}
 </script>
 
 <style>
