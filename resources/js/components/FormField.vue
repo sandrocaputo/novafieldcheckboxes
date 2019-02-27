@@ -37,11 +37,27 @@ export default {
     props: ['resourceName', 'resourceId', 'field'],
 
     methods: {
+
+        getCheckedBoxesIds( values )
+        {
+            var ids = [];
+
+            for ( var i = 0; i < values.length; i++ )
+            {
+                ids.push(values[i].id);
+            }
+
+            return ids;
+        },
+
         isChecked(option) {
+            option = parseInt(option);
             return this.value ? this.value.includes(option) : false
         },
 
         toggleOption(option) {
+            option = parseInt(option);
+
             if (this.isChecked(option)) {
                 this.$set(this, 'value', this.value.filter(item => item != option))
 
@@ -55,14 +71,15 @@ export default {
          * Set the initial, internal value for the field.
          */
         setInitialValue() {
-          this.value = this.field.value || []
+            this.value = this.getCheckedBoxesIds( this.field.value );
+            // this.value = this.field.value || [];
         },
 
         /**
          * Fill the given FormData object with the field's internal value.
          */
         fill(formData) {
-          formData.append(this.field.attribute, this.value || [])
+            formData.append(this.field.attribute, this.value || []);
         },
 
         /**
