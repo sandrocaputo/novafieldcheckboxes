@@ -44,6 +44,33 @@ class Checkboxes extends Field
         );
     }
 
+
+    /**
+     *  Enables updating the model attribute as a relation instead of a column.
+     *  Note: currently only working when updating a model.
+     */
+    public function isRelation()
+    {
+        return $this->withMeta(['is_relation' => true]);
+    }
+
+    /**
+     *  Getting the selected ids and syncs them using the model attribute as a relation.
+     */
+    public function syncRelation( $model, $choices, $attribute )
+    {
+        $ids = [];
+        foreach ( $choices as $key => $choice )
+        {
+            if ( intval($choice) > 0 )
+            {
+                $ids[] = intval($choice);
+            }
+        }
+
+        $model->$attribute()->sync( $ids );
+    }
+
     /**
      * Hydrate the given attribute on the model based on the incoming request.
      *
@@ -66,7 +93,15 @@ class Checkboxes extends Field
                 })->filter()->all();
             }
 
-            $model->{$attribute} = $choices;
+            if ( $this->meta['is_relation'] )
+            {
+                $this->syncRelation( $model, $choices, $attribute );
+            }
+            else
+            {
+                $model->{$attribute} = $choices;
+            }
+
         }
     }
 
