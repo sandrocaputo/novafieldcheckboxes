@@ -1,3 +1,5 @@
+# NOTE: Currently only works with relations and only when updating a Model. 
+
 # Laravel Nova Checkboxes Field
 
 ![Checkboxes in Laravel Nova](formPreview.png)
