@@ -1,6 +1,6 @@
 {
-  "name": "sandrocaputo/novafieldcheckboxes",
-  "description": "Adds checkboxes to Laravel Nova fields that works with Relations",
+  "name": "silvanite/novafieldcheckboxes",
+  "description": "A Laravel Nova field to display a number of multi-select options using checkboxes.",
   "keywords": [
     "laravel",
     "nova",
@@ -13,17 +13,18 @@
   ],
   "license": "MIT",
   "require": {
-    "php": ">=7.1.0"
+    "php": ">=7.1.0",
+    "sandrocaputo/novafieldcheckboxes": "master"
   },
   "autoload": {
     "psr-4": {
-      "sandrocaputo\\NovaFieldCheckboxes\\": "src/"
+      "Silvanite\\NovaFieldCheckboxes\\": "src/"
     }
   },
   "extra": {
     "laravel": {
       "providers": [
-        "sandrocaputo\\NovaFieldCheckboxes\\FieldServiceProvider"
+        "Silvanite\\NovaFieldCheckboxes\\FieldServiceProvider"
       ]
     }
   },
@@ -31,5 +32,12 @@
     "sort-packages": true
   },
   "minimum-stability": "dev",
-  "prefer-stable": true
+  "prefer-stable": true,
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/sandrocaputo/novafieldcheckboxes"
+    }
+  ],
+
 }
