@@ -14,7 +14,7 @@
   "license": "MIT",
   "require": {
     "php": ">=7.1.0",
-    "sandrocaputo/novafieldcheckboxes": "master"
+    "sandrocaputo/novafieldcheckboxes": "dev-relations"
   },
   "autoload": {
     "psr-4": {
